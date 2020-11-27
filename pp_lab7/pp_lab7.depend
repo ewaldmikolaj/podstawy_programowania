@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1606205791 source:c:\users\ewald\desktop\pp_lab7\main.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+

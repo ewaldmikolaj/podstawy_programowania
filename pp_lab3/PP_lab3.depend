@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1603800392 source:c:\users\ewald\desktop\pp_lab3\main.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	<string.h>
+
+1603800392 source:c:\users\ewald\desktop\studia\podstawy_programowania - lab\pp_lab3\main.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	<string.h>
+
