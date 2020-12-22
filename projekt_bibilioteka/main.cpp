@@ -110,17 +110,25 @@ void read_from_file() {
     book from_database;
     std::string variable;
     while(!database.eof()) {
-      //variable nie może lecieć do każdego bo wtedy to samo no i wiadomo
-      std::getline(database);
+      getline(database, variable);
       from_database.id = std::stoi(variable);
+      getline(database, variable);
       from_database.title = variable;
+      getline(database, variable);
       from_database.author.name = variable;
+      getline(database, variable);
       from_database.author.surname = variable;
+      getline(database, variable);
       from_database.cathegory = variable;
+      getline(database, variable);
       from_database.hire_date.day = std::stoi(variable);
+      getline(database, variable);
       from_database.hire_date.month = std::stoi(variable);
+      getline(database, variable);
       from_database.hire_date.year = std::stoi(variable);
+      getline(database, variable);
       from_database.reader.name = variable;
+      getline(database, variable);
       from_database.reader.surname = variable;
       push(from_database);
     }
