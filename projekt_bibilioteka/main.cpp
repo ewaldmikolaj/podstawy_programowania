@@ -8,10 +8,10 @@
 #include "global.h"
 #include "function.h"
 
-/*template <typename struct_el>
-void ModifyBook(int index, struct_el key) {
-  std::cout << head->book.*key;
-}*/
+template <typename type, type Book::*struct_el>
+void ModifyBook(Book book) {
+  std::cout << book.*struct_el << std::endl;
+}
 
 
 int main() {
@@ -21,6 +21,7 @@ int main() {
   //push(a);
   //push(b);
   //ModifyBook(1, "title");
+  ModifyBook<std::string, &Book::title> (head->book);
   print_all();
   save_to_file();
   return 0;
