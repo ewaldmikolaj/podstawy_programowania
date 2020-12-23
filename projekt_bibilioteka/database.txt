@@ -1,8 +1,8 @@
-2
-21 pytan
-noah
-harari
-naukowa
+1
+20 pytan
+no
+hai
+popularnonaukowa
 2
 2
 2020
