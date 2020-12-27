@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <iostream>
+#include <iomanip>
 #include <stdlib.h>
 #include <string>
 #include <fstream>
@@ -7,11 +8,13 @@
 //all functions 
 
 void push(Book data);
+void del_book(int index);
 void print_all();
 
 void print_book(Book data);
 void save_to_file();
 void read_from_file();
+std::string string_input();
 
 //list functions
 
@@ -37,8 +40,31 @@ void push(Book data) {
   }
 }
 
+void del_book(int index) {
+  if (index == 0) {
+    list_of_books* element = head;
+    head = element->next;
+    delete element;
+  } else {
+    list_of_books* current = head;
+    list_of_books* tmp;
+    int i = 0;
+    while (i < index - 1) {
+      current = current->next;
+      i++;
+    }
+    tmp = current->next;
+    current->next = tmp->next;
+    if (current->next != NULL) {
+      current->next->prev = current;
+    }
+    delete tmp;
+  }
+}
+
 void print_all() {
   list_of_books* element = head;
+  std::cout << std::left << std::setw(10) << "id" << std::setw(25) << "tytul" << std::setw(15) << "imie autora" << std::setw(20) << "nazwisko autora" << std::setw(12) << "kategoria" << std::endl;
   while(element != NULL) {
     print_book(element->book);
     element = element->next;
@@ -62,7 +88,7 @@ void save_to_file() {
 //other functions
 
 void print_book(Book data) {
-  std::cout << data.author.name << " " << data.author.surname << "\n";
+  std::cout << std::left << std::setw(10) << data.id << std::setw(25) << data.title << std::setw(15) << data.author.name << std::setw(20) << data.author.surname << std::setw(12) << data.cathegory << std::endl;
 }
 
 void read_from_file() {
@@ -80,4 +106,13 @@ void read_from_file() {
   } else {
     printf("nie ma bazy\n");
   }
+}
+
+std::string string_input() {
+  std::string output;
+  do {
+    std::cout << "Podaj wartosc: ";
+    std::getline(std::cin, output);
+  } while(output == "");
+  return output;
 }
