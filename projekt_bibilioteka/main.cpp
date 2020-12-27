@@ -4,6 +4,7 @@
 #include <string>
 #include <fstream>
 #include <unordered_map>
+#include <map>
 
 #include "struct.h"
 #include "global.h"
@@ -12,11 +13,11 @@
 
 int main() {
   read_from_file();
-  auto input = string_input();
+  std::string input = string_input("wartosc");
   switch (main_switch_case.count(input) ? main_switch_case.at(input) : 0)
   {
   case 1:
-    std::cout << "okejos" << std::endl;
+    add_book();
     break;
   
   case 6:

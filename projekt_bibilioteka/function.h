@@ -14,6 +14,7 @@ void print_all();
 void print_book(Book data);
 void save_to_file();
 void read_from_file();
+void add_book();
 std::string string_input();
 
 //list functions
@@ -108,11 +109,21 @@ void read_from_file() {
   }
 }
 
-std::string string_input() {
+std::string string_input(std::string what) {
   std::string output;
   do {
-    std::cout << "Podaj wartosc: ";
+    std::cout << "Podaj " << what << ": ";
     std::getline(std::cin, output);
   } while(output == "");
   return output;
+}
+
+void add_book() {
+  auto book_map_copy = map_of_book;
+  for (auto &member : book_map_copy) {
+    member.second = string_input(member.first);
+  }
+  Book book = { std::stoi(book_map_copy.at("id")), book_map_copy.at("tytul"), book_map_copy.at("imie autora"), book_map_copy.at("nazwisko autora"), book_map_copy.at("kategoria"), std::stoi(book_map_copy.at("dzien")), std::stoi(book_map_copy.at("miesiac")), std::stoi(book_map_copy.at("rok")), book_map_copy.at("imie czytelnika"), book_map_copy.at("nazwisko czytelnika"), book_map_copy.at("inne")};
+  push(book);
+  //alfabetycznie leci a nie chce tak
 }
