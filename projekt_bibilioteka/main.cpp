@@ -36,7 +36,7 @@ int main() {
     break;
   
   case 2:
-    //del_book();
+    del_option();
     break;
 
   case 6:

@@ -38,26 +38,18 @@ void push(Book data) {
   }
 }
 
-void del_book(int index) {
-  if (index == 0) {
-    list_of_books* element = head;
-    head = element->next;
-    delete element;
-  } else {
-    list_of_books* current = head;
-    list_of_books* tmp;
-    int i = 0;
-    while (i < index - 1) {
-      current = current->next;
-      i++;
-    }
-    tmp = current->next;
-    current->next = tmp->next;
-    if (current->next != NULL) {
-      current->next->prev = current;
-    }
-    delete tmp;
+void del_book() {
+  //jakby cos nie dzialalo to commit z dnia 29.12.2020
+  if (modified->next !=NULL && modified->prev == NULL) {
+    modified->next->prev = NULL;
+  } else if (modified->next == NULL && modified->prev != NULL) {
+    modified->prev->next = NULL;
+  } else if (modified->next != NULL && modified->prev != NULL) {
+    modified->prev->next = modified->next;
+    modified->next->prev = modified->prev;
   }
+  delete modified;
+  modified = NULL;
 }
 
 void print_all() {
@@ -174,7 +166,7 @@ void add_book() {
 void add_option() {
   bool end = true;
   int choice = 0;
-  std::cout << "Dodawanie ksiazek: " << std::endl;
+  std::cout << "# Dodawanie ksiazek #" << std::endl;
   while (end) {
     add_book();
     std::cout << "Czy chcesz dodawac dalej? \n1. tak \n2.nie" << std::endl;
@@ -183,4 +175,12 @@ void add_option() {
       end = false;
     }
   }
+}
+
+void del_option() {
+  print_all();
+  find_in_list("Wybor");
+  //std::cout << modified->book.title << std::endl;
+  del_book();
+  print_all();
 }
