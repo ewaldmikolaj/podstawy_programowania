@@ -4,9 +4,11 @@
 #include <string>
 #include <fstream>
 #include <unordered_map>
-#include <map>
+#include <utility>
 
 list_of_books* head = NULL;
+list_of_books* modified = NULL;
+std::string last_id = "0"; 
 
 static const std::unordered_map<std::string, int> main_switch_case {
   {"1", 1},
@@ -19,15 +21,16 @@ static const std::unordered_map<std::string, int> main_switch_case {
   {"X", 8}
 };
 
-static const std::map<std::string, std::string> map_of_book {
+const std::pair <std::string, std::string> book_holder[] {
   {"id", ""},
   {"tytul", ""},
   {"imie autora", ""},
   {"nazwisko autora", ""},
   {"kategoria", ""},
-  {"dzien", ""},
-  {"miesiac", ""},
-  {"rok", ""},
+  {"status", "0"},
+  {"dzien", "0"},
+  {"miesiac", "0"},
+  {"rok", "0"},
   {"imie czytelnika", ""},
   {"nazwisko czytelnika", ""},
   {"inne", ""}

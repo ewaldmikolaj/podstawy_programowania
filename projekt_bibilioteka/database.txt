@@ -3,9 +3,10 @@
 Yuval Noah
 Harrari
 popularnonaukowa
-2
-2
-2020
+0
+0
+0
+0
 mikolaj
 ewald
 bardzo fajna
@@ -14,9 +15,10 @@ Sapiens
 Yuval Noah
 Harrari
 popularnonaukowa
-2
-2
-2020
+0
+0
+0
+0
 mikolaj
 ewald
 po angielsku
@@ -25,9 +27,10 @@ Forrest Gump
 Winston
 Groom
 opowiesc
-2
-2
-2020
+0
+0
+0
+0
 mikolaj
 ewald
 bardzo fajna
@@ -36,9 +39,34 @@ Wybor
 Edit Eva
 Echer
 historia
-2
-2
-2020
+0
+0
+0
+0
 mikolaj
 ewald
 nie przeczytalem
+5
+Trolle Putina
+Jessika
+Aro
+Dokumentalna
+0
+0
+0
+0
+Mikolaj
+Ewal
+nie czytalem 
+6
+Ostatnie zyczenie
+Andrzej 
+Sapkowski 
+Opowiesc
+0
+0
+0
+0
+
+
+kategoria

@@ -20,6 +20,7 @@ struct Book {
   std::string title;
   struct User author;
   std::string cathegory;
+  bool status;
   struct Date hire_date;
   struct User reader;
   std::string others;

@@ -4,10 +4,25 @@
 #include <string>
 #include <fstream>
 #include <unordered_map>
-#include <map>
+#include <utility>
 
 #include "struct.h"
 #include "global.h"
+
+void push(Book data);
+void del_book(int index);
+void print_all();
+
+void print_book(Book data);
+void save_to_file();
+void read_from_file();
+
+std::string string_input();
+bool find_in_list(std::string value);
+
+void add_option();
+void add_book();
+
 #include "function.h"
 
 
@@ -17,9 +32,13 @@ int main() {
   switch (main_switch_case.count(input) ? main_switch_case.at(input) : 0)
   {
   case 1:
-    add_book();
+    add_option();
     break;
   
+  case 2:
+    //del_book();
+    break;
+
   case 6:
     print_all();
     break;

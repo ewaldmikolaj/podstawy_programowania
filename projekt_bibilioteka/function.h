@@ -4,18 +4,15 @@
 #include <stdlib.h>
 #include <string>
 #include <fstream>
+#include <utility>
+#include <algorithm>
+#include <iterator>
+#include <limits>
+#include <array>
 
 //all functions 
 
-void push(Book data);
-void del_book(int index);
-void print_all();
 
-void print_book(Book data);
-void save_to_file();
-void read_from_file();
-void add_book();
-std::string string_input();
 
 //list functions
 
@@ -66,7 +63,7 @@ void del_book(int index) {
 void print_all() {
   list_of_books* element = head;
   std::cout << std::left << std::setw(10) << "id" << std::setw(25) << "tytul" << std::setw(15) << "imie autora" << std::setw(20) << "nazwisko autora" << std::setw(12) << "kategoria" << std::endl;
-  while(element != NULL) {
+  while (element != NULL) {
     print_book(element->book);
     element = element->next;
   }
@@ -77,13 +74,53 @@ void save_to_file() {
   database.open("database.txt", std::fstream::out);
   list_of_books* element = head;
   while(element != NULL) {
-    database << element->book.id << "\n" << element->book.title << "\n" << element->book.author.name << "\n" << element->book.author.surname << "\n" << element->book.cathegory << "\n" << element->book.hire_date.day << "\n" << element->book.hire_date.month << "\n" << element->book.hire_date.year << "\n" << element->book.reader.name << "\n" << element->book.reader.surname << "\n" << element->book.others;
+    database << element->book.id << "\n" << element->book.title << "\n" << element->book.author.name << "\n" << element->book.author.surname << "\n" << element->book.cathegory << "\n" << element->book.status << "\n" << element->book.hire_date.day << "\n" << element->book.hire_date.month << "\n" << element->book.hire_date.year << "\n" << element->book.reader.name << "\n" << element->book.reader.surname << "\n" << element->book.others;
     if (element->next != NULL) {
       database << "\n";
     }
     element = element->next;
   }
   database.close();
+}
+
+//simple functions
+
+std::string string_input(std::string what) {
+  std::string output;
+  do {
+    std::cout << "Podaj " << what << ": ";
+    std::getline(std::cin, output);
+  } while(output == "");
+  return output;
+}
+
+int int_input(std::string what, int from, int to) {
+  int output;
+  do {
+    std::cout << "Podaj " << what << ": ";
+    while (!(std::cin >> output)) {
+      std::cin.clear();
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+      std::cout << "Podaj " << what << ": ";
+    }
+  } while (output < from || output > to);
+  return output;
+}
+
+bool find_in_list(std::string value) {
+  list_of_books* element = head;
+  int id = -1;
+  try {
+    id = std::stoi(value);
+  } catch(...) {}
+  while (element != NULL) {
+    if (element->book.id == id || element->book.title == value) {
+      modified = element;
+      return true;
+    }
+    element = element->next;
+  }
+  return false;
 }
 
 //other functions
@@ -95,13 +132,14 @@ void print_book(Book data) {
 void read_from_file() {
   std::ifstream database("database.txt");
   if (database.good()) {
-    std::string tab[11];
+    std::string tab[12];
     int i = 0;
     while(!database.eof()) {
       for (auto &value : tab) {
         getline(database, value);
       }
-      Book temporary = { std::stoi(tab[0]), tab[1], tab[2], tab[3], tab[4], std::stoi(tab[5]), std::stoi(tab[6]), std::stoi(tab[7]), tab[8], tab[9], tab[10]};
+      last_id = tab[0];
+      Book temporary = { std::stoi(tab[0]), tab[1], tab[2], tab[3], tab[4], std::stoi(tab[5]), std::stoi(tab[6]), std::stoi(tab[7]), std::stoi(tab[8]), tab[9], tab[10], tab[11]};
       push(temporary);
     }
   } else {
@@ -109,21 +147,40 @@ void read_from_file() {
   }
 }
 
-std::string string_input(std::string what) {
-  std::string output;
-  do {
-    std::cout << "Podaj " << what << ": ";
-    std::getline(std::cin, output);
-  } while(output == "");
-  return output;
+void add_book() {
+  std::pair <std::string, std::string> holder_cp[11];
+  for (int i = 0; i < 11; i++) {
+    holder_cp[i] = book_holder[i];
+  }
+  //auto holder_cp = [=]() {} 
+  for (auto &member : holder_cp) {
+    if (member.first != "id" && member.first != "status" && member.first != "dzien" && member.first != "miesiac" && member.first != "rok" && member.first != "imie czytelnika" && member.first != "nazwisko czytelnika") {
+      member.second = string_input(member.first);
+    }
+  }
+  int id = std::stoi(last_id) + 1;
+  last_id = std::to_string(id);
+  if (find_in_list(holder_cp[1].second)) {
+    std::cout << "ksiazka juz widnieje w bazie i nie zostanie dodana ponownie" << std::endl;
+    modified = NULL;
+  } else {
+    Book book = { id, holder_cp[1].second, holder_cp[2].second, holder_cp[3].second, holder_cp[4].second, std::stoi(holder_cp[5].second) , std::stoi(holder_cp[6].second), std::stoi(holder_cp[7].second), std::stoi(holder_cp[8].second), holder_cp[9].second, holder_cp[10].second, holder_cp[11].second };
+    push(book);
+  }
 }
 
-void add_book() {
-  auto book_map_copy = map_of_book;
-  for (auto &member : book_map_copy) {
-    member.second = string_input(member.first);
+//program
+
+void add_option() {
+  bool end = true;
+  int choice = 0;
+  std::cout << "Dodawanie ksiazek: " << std::endl;
+  while (end) {
+    add_book();
+    std::cout << "Czy chcesz dodawac dalej? \n1. tak \n2.nie" << std::endl;
+    choice = int_input("liczbe", 1, 2);
+    if (choice == 2) {
+      end = false;
+    }
   }
-  Book book = { std::stoi(book_map_copy.at("id")), book_map_copy.at("tytul"), book_map_copy.at("imie autora"), book_map_copy.at("nazwisko autora"), book_map_copy.at("kategoria"), std::stoi(book_map_copy.at("dzien")), std::stoi(book_map_copy.at("miesiac")), std::stoi(book_map_copy.at("rok")), book_map_copy.at("imie czytelnika"), book_map_copy.at("nazwisko czytelnika"), book_map_copy.at("inne")};
-  push(book);
-  //alfabetycznie leci a nie chce tak
 }
