@@ -42,11 +42,14 @@ void del_book() {
   //jakby cos nie dzialalo to commit z dnia 29.12.2020
   if (modified->next !=NULL && modified->prev == NULL) {
     modified->next->prev = NULL;
+    head = modified->next;
   } else if (modified->next == NULL && modified->prev != NULL) {
     modified->prev->next = NULL;
   } else if (modified->next != NULL && modified->prev != NULL) {
     modified->prev->next = modified->next;
     modified->next->prev = modified->prev;
+  } else if (modified->next == NULL && modified->prev == NULL) {
+    head = NULL;
   }
   delete modified;
   modified = NULL;
@@ -178,9 +181,12 @@ void add_option() {
 }
 
 void del_option() {
+  bool end = true;
+  int choice = 0;
+  std::string title_or_id = "";
+  std::cout << "# Usuwanie ksiazek #" << std::endl;
   print_all();
-  find_in_list("Wybor");
-  //std::cout << modified->book.title << std::endl;
+  title_or_id = string_input("id albo tytul");
+  find_in_list(title_or_id);
   del_book();
-  print_all();
 }
