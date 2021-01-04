@@ -147,7 +147,6 @@ void add_book() {
   for (int i = 0; i < 11; i++) {
     holder_cp[i] = book_holder[i];
   }
-  //auto holder_cp = [=]() {} 
   for (auto &member : holder_cp) {
     if (member.first != "id" && member.first != "status" && member.first != "dzien" && member.first != "miesiac" && member.first != "rok" && member.first != "imie czytelnika" && member.first != "nazwisko czytelnika") {
       member.second = string_input(member.first);
@@ -164,9 +163,46 @@ void add_book() {
   }
 }
 
+void edit_book_switch() {
+  int i = 1;
+  std::cout << "Co chcesz edytowac?" << std::endl;
+  for (const auto& member : book_holder) {
+    if (member.first != "id" && member.first != "status" && member.first != "dzien" && member.first != "miesiac" && member.first != "rok" && member.first != "imie czytelnika" && member.first != "nazwisko czytelnika") {
+      std::cout << i++ << ". " << member.first << std::endl;
+    }
+  }
+  int choice = int_input("liczbe", 1, 5);
+  std::cin.ignore();
+  switch (choice)
+  {
+  case 1:
+    modified->book.title = string_input("tytul");
+    break;
+
+  case 2:
+    modified->book.author.name = string_input("imie autora");
+    break;
+
+  case 3:
+    modified->book.author.surname = string_input("nazwisko autora");
+    break;
+
+  case 4:
+    modified->book.cathegory = string_input("kategorie");
+    break;
+
+  case 5:
+    modified->book.others = string_input("inne dane");
+    break;
+    
+  default:
+    break; 
+  }
+}
+
 //program
 
-void add_option() {
+void add_option () {
   bool end = true;
   int choice = 0;
   std::cout << "# Dodawanie ksiazek #" << std::endl;
@@ -180,13 +216,52 @@ void add_option() {
   }
 }
 
-void del_option() {
+void del_option () {
   bool end = true;
   int choice = 0;
   std::string title_or_id = "";
   std::cout << "# Usuwanie ksiazek #" << std::endl;
-  print_all();
-  title_or_id = string_input("id albo tytul");
-  find_in_list(title_or_id);
-  del_book();
+  while (end) {
+    print_all();
+    title_or_id = string_input("id albo tytul");
+    if (find_in_list(title_or_id)) {
+      del_book();
+      std::cout << "Czy chcesz usuwac dalej? \n1. tak \n2.nie" << std::endl;
+      choice = int_input("liczbe", 1, 2);
+      if (choice == 2) {
+        end = false;
+      }
+    } else {
+      std::cout << "\n # Nie ma takiej ksiazki, czy na pewno chcesz usuwac? # \n1. tak \n2.nie \n" << std::endl;
+      choice = int_input("liczbe", 1, 2);
+      if (choice == 2) {
+        end = false;
+      }
+    }
+  }
+}
+
+void edit_option () {
+  bool end = true;
+  int choice = -1;
+  std::string title_or_id = "";
+  std::cout << "# Edytowanie ksiazek #" << std::endl;
+  while (end) {
+    print_all();
+    title_or_id = string_input("id albo tytul");
+    if (find_in_list(title_or_id)) {
+      edit_book_switch();
+      std::cout << "Czy chcesz edytowac dalej? \n1. tak \n2.nie" << std::endl;
+      choice = int_input("liczbe", 1, 2);
+      if (choice == 2) {
+        end = false;
+      }
+    } else {
+      std::cout << "\n # Nie ma takiej ksiazki, czy na pewno chcesz edytowac? # \n1. tak \n2.nie \n" << std::endl;
+      choice = int_input("liczbe", 1, 2);
+      if (choice == 2) {
+        end = false;
+      }
+    }
+  }
 }

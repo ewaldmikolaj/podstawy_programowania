@@ -38,7 +38,11 @@ int main() {
   case 2:
     del_option();
     break;
-
+  
+  case 3:
+    edit_option();
+    break;
+    
   case 6:
     print_all();
     break;
