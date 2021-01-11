@@ -42,6 +42,10 @@ int main() {
   case 3:
     edit_option();
     break;
+
+  case 4:
+    change_status();
+    break;
     
   case 6:
     print_all();

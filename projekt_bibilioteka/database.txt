@@ -3,10 +3,10 @@
 Yuval Noah
 Harrari
 popularnonaukowa
-0
-0
-0
-0
+1
+11
+1
+2021
 mikolaj
 ewald
 bardzo fajna
@@ -15,12 +15,12 @@ Sapiens
 Yuval Noah
 Harrari
 popularnonaukowa
-0
-0
-0
-0
-mikolaj
-ewald
+1
+1
+11
+2021
+Nikodem
+Kwiecinski 
 po angielsku
 3
 Forrest Gump

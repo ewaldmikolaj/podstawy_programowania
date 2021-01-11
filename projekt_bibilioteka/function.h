@@ -9,6 +9,7 @@
 #include <iterator>
 #include <limits>
 #include <array>
+#include <ctime>
 
 //all functions 
 
@@ -16,7 +17,7 @@
 
 //list functions
 
-void push(Book data) {
+void push (Book data) {
   if (head == NULL) {
     list_of_books* element = new list_of_books;
     element->book = data;
@@ -38,7 +39,7 @@ void push(Book data) {
   }
 }
 
-void del_book() {
+void del_book () {
   //jakby cos nie dzialalo to commit z dnia 29.12.2020
   if (modified->next !=NULL && modified->prev == NULL) {
     modified->next->prev = NULL;
@@ -55,7 +56,7 @@ void del_book() {
   modified = NULL;
 }
 
-void print_all() {
+void print_all () {
   list_of_books* element = head;
   std::cout << std::left << std::setw(10) << "id" << std::setw(25) << "tytul" << std::setw(15) << "imie autora" << std::setw(20) << "nazwisko autora" << std::setw(12) << "kategoria" << std::endl;
   while (element != NULL) {
@@ -64,7 +65,7 @@ void print_all() {
   }
 }
 
-void save_to_file() {
+void save_to_file () {
   std::fstream database;
   database.open("database.txt", std::fstream::out);
   list_of_books* element = head;
@@ -80,7 +81,7 @@ void save_to_file() {
 
 //simple functions
 
-std::string string_input(std::string what) {
+std::string string_input (std::string what) {
   std::string output;
   do {
     std::cout << "Podaj " << what << ": ";
@@ -89,7 +90,7 @@ std::string string_input(std::string what) {
   return output;
 }
 
-int int_input(std::string what, int from, int to) {
+int int_input (std::string what, int from, int to) {
   int output;
   do {
     std::cout << "Podaj " << what << ": ";
@@ -102,7 +103,7 @@ int int_input(std::string what, int from, int to) {
   return output;
 }
 
-bool find_in_list(std::string value) {
+bool find_in_list (std::string value) {
   list_of_books* element = head;
   int id = -1;
   try {
@@ -120,11 +121,20 @@ bool find_in_list(std::string value) {
 
 //other functions
 
-void print_book(Book data) {
+void print_book (Book data) {
   std::cout << std::left << std::setw(10) << data.id << std::setw(25) << data.title << std::setw(15) << data.author.name << std::setw(20) << data.author.surname << std::setw(12) << data.cathegory << std::endl;
 }
 
-void read_from_file() {
+void print_used_books () {
+  list_of_books* element = head;
+  std::cout << std::left << std::setw(10) << "id" << std::setw(25) << "tytul" << std::setw(20) << "czy wypozyczona" << std::setw(20) << "imie wlasciciela" << std::setw(20) << "nazwisko wlascicela" << std::setw(20) << "data wypozyczenia" << std::endl;
+  while (element != NULL) {
+    std::cout << std::left << std::setw(10) << element->book.id << std::setw(25) << element->book.title << std::setw(20) << (element->book.status ? "wypozyczona" : "niewypozyczona") << std::setw(20) << (element->book.status ? element->book.reader.name : "brak") << std::setw(20) << (element->book.status ? element->book.reader.surname : "brak") << std::setw(20) << (element->book.status ? std::to_string(element->book.hire_date.day) + '-' + std::to_string(element->book.hire_date.month) + '-' + std::to_string(element->book.hire_date.year) : "brak") << std::endl;
+    element = element->next;
+  }
+}
+
+void read_from_file () {
   std::ifstream database("database.txt");
   if (database.good()) {
     std::string tab[12];
@@ -142,7 +152,7 @@ void read_from_file() {
   }
 }
 
-void add_book() {
+void add_book () {
   std::pair <std::string, std::string> holder_cp[11];
   for (int i = 0; i < 11; i++) {
     holder_cp[i] = book_holder[i];
@@ -200,6 +210,30 @@ void edit_book_switch() {
   }
 }
 
+void modify_book_status () {
+  if (modified->book.status) {
+    std::cout << "Ksiazka byla wypozyczona przez " << modified->book.reader.name << " " << modified->book.reader.surname << ", zmieniam status na oddana" << std::endl;
+    modified->book.status = 0;
+    modified->book.hire_date.day = 0;
+    modified->book.hire_date.month = 0;
+    modified->book.hire_date.year = 0;
+    modified->book.reader.name = "";
+    modified->book.reader.surname = "";
+  } else {
+    std::cout << "Wypozycznie ksiazki: " << std::endl;
+    modified->book.status = 1;
+    modified->book.reader.name = string_input("imie czytelnika");
+    modified->book.reader.surname = string_input("nazwisko czytelnika");
+    std::cout << "dodaje date wypozyczenia..." << std::endl;
+    time_t t = time(0); 
+    struct tm* timeStruct = localtime(&t);
+    modified->book.hire_date.year = (timeStruct->tm_year) + 1900;
+    modified->book.hire_date.month = (timeStruct->tm_mon);
+    modified->book.hire_date.day = (timeStruct->tm_mday) + 1;
+    std::cout << "Wypozyczenie zakonczone" << std::endl;
+  }
+}
+ 
 //program
 
 void add_option () {
@@ -251,7 +285,34 @@ void edit_option () {
     title_or_id = string_input("id albo tytul");
     if (find_in_list(title_or_id)) {
       edit_book_switch();
+      modified = NULL;
       std::cout << "Czy chcesz edytowac dalej? \n1. tak \n2.nie" << std::endl;
+      choice = int_input("liczbe", 1, 2);
+      if (choice == 2) {
+        end = false;
+      }
+    } else {
+      std::cout << "\n # Nie ma takiej ksiazki, czy na pewno chcesz edytowac? # \n1. tak \n2.nie \n" << std::endl;
+      choice = int_input("liczbe", 1, 2);
+      if (choice == 2) {
+        end = false;
+      }
+    }
+  }
+}
+
+void change_status () {
+  bool end = true;
+  int choice = -1;
+  std::string title_or_id = "";
+  std::cout << "# Wypozyczanie ksiazek #" << std::endl;
+  while (end) {
+    print_used_books();
+    title_or_id = string_input("id albo tytul");
+    if (find_in_list(title_or_id)) {
+      modify_book_status();
+      modified = NULL;
+      std::cout << "Czy chcesz wypozyczac dalej? \n1. tak \n2.nie" << std::endl;
       choice = int_input("liczbe", 1, 2);
       if (choice == 2) {
         end = false;
