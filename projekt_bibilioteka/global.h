@@ -10,7 +10,13 @@ list_of_books* head = NULL;
 list_of_books* modified = NULL;
 std::string last_id = "0"; 
 
-static const std::unordered_map<std::string, int> main_switch_case {
+static const std::unordered_map<std::string, int> main_switch_case_small {
+  {"1", 1},
+  {"2", 9},
+  {"X", 11}
+};
+
+static const std::unordered_map<std::string, int> main_switch_case_big {
   {"1", 1},
   {"2", 2},
   {"3", 3},
@@ -19,7 +25,9 @@ static const std::unordered_map<std::string, int> main_switch_case {
   {"6", 6},
   {"7", 7},
   {"8", 8},
-  {"X", 9}
+  {"9", 9},
+  {"10", 10},
+  {"X", 11}
 };
 
 const std::pair <std::string, std::string> book_holder[] {

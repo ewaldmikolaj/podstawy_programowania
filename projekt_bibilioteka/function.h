@@ -267,16 +267,22 @@ void del_option () {
     title_or_id = string_input("id albo tytul");
     if (find_in_list(title_or_id)) {
       del_book();
+      if (head == NULL) {
+        std::cout << "Brak ksiazek do usuwania, wychodzenie..." << std::endl;
+        return;
+      }
       std::cout << "Czy chcesz usuwac dalej? \n1. tak \n2.nie" << std::endl;
       choice = int_input("liczbe", 1, 2);
       if (choice == 2) {
         end = false;
+        std::cin.ignore();
       }
     } else {
       std::cout << "\n # Nie ma takiej ksiazki, czy na pewno chcesz usuwac? # \n1. tak \n2.nie \n" << std::endl;
       choice = int_input("liczbe", 1, 2);
       if (choice == 2) {
         end = false;
+        std::cin.ignore();
       }
     }
   }

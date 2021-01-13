@@ -34,11 +34,18 @@ void print_alphabetically();
 
 
 int main() {
-  read_from_file();
   std::string input;
-  std::cout << "# Witamy w programie bibliotecznym #\nPobieranie danych z bazy...\nZakonczone" << std::endl;
+  std::unordered_map<std::string, int> main_switch_case;
+  std::cout << "# Witamy w programie bibliotecznym #" << std::endl;
   while (true) {
-    std::cout << "Co chcesz zrobic?\n1. Dodaj nowa ksiazke\n2. Usun ksiazke\n3. Edytuj dane ksiazki\n4. Zmien status ksiazki\n5. Wyszukaj ksiazke\n6. Wypisz wszystkie ksiazki\n7. Wypisz ksiazki alfabetycznie\n8. Wypisz ksiazki wypozyczone\nX. Wyjdz " << std::endl;
+    //dodac menu zalezne od tego co mamy
+    if (head == NULL) {
+      main_switch_case = main_switch_case_small;
+      std::cout << "Co chcesz zrobic?\n1. Dodaj nowa ksiazke\n2. Wczytaj ksiazki\nX. Wyjdz" << std::endl;
+    } else {
+      main_switch_case = main_switch_case_big;
+      std::cout << "Co chcesz zrobic?\n1. Dodaj nowa ksiazke\n2. Usun ksiazke\n3. Edytuj dane ksiazki\n4. Zmien status ksiazki\n5. Wyszukaj ksiazke\n6. Wypisz wszystkie ksiazki\n7. Wypisz ksiazki alfabetycznie\n8. Wypisz ksiazki wypozyczone\nX. Wyjdz " << std::endl;
+    }
     input = string_input("wartosc");
     switch (main_switch_case.count(input) ? main_switch_case.at(input) : 0)
     {
@@ -70,11 +77,19 @@ int main() {
       break;
     
     case 9:
+      read_from_file();
+      break;
+    
+    case 10:
+      save_to_file();
+      break;
+
+    case 11:
       std::cout << "Wylaczanie programu..." << std::endl;
       save_to_file();
       std::exit(0);
       break;
-    
+
     case 0:
       std::cout << "Wprowadz poprawna wartosc" << std::endl;
       break;
