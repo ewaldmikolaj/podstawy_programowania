@@ -18,7 +18,8 @@ static const std::unordered_map<std::string, int> main_switch_case {
   {"5", 5},
   {"6", 6},
   {"7", 7},
-  {"X", 8}
+  {"8", 8},
+  {"X", 9}
 };
 
 const std::pair <std::string, std::string> book_holder[] {

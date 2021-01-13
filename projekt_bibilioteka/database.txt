@@ -3,25 +3,13 @@
 Yuval Noah
 Harrari
 popularnonaukowa
-1
-11
-1
-2021
-mikolaj
-ewald
+0
+0
+0
+0
+
+
 bardzo fajna
-2
-Sapiens
-Yuval Noah
-Harrari
-popularnonaukowa
-1
-1
-11
-2021
-Nikodem
-Kwiecinski 
-po angielsku
 3
 Forrest Gump
 Winston
@@ -51,30 +39,18 @@ Trolle Putina
 Jessika
 Aro
 Dokumentalna
+1
+14
 0
-0
-0
-0
+2021
 Mikolaj
-Ewal
+Ewald
 nie czytalem
 6
 Gambit krolowej
 Tevis
 Walter
 opowiesc
-0
-0
-0
-0
-
-
-kategoria
-7
-czuly narrator 
-Olga
-Tokarczuk
-Historie
 0
 0
 0

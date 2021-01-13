@@ -4,10 +4,7 @@
 #include <stdlib.h>
 #include <string>
 #include <fstream>
-#include <utility>
 #include <algorithm>
-#include <iterator>
-#include <limits>
 #include <array>
 #include <ctime>
 
@@ -17,7 +14,7 @@
 
 //list functions
 
-void push (Book data) {
+void push (Book data) { 
   if (head == NULL) {
     list_of_books* element = new list_of_books;
     element->book = data;
@@ -233,6 +230,16 @@ void modify_book_status () {
     std::cout << "Wypozyczenie zakonczone" << std::endl;
   }
 }
+
+void bubble_sort (struct Book array[], int size) {
+  for (int i = 0; i < size; i++) {
+    for (int j = 1; j < size - i; j++) {
+      if (array[j - 1].title > array[j].title) {
+        std::swap(array[j - 1], array[j]);
+      }
+    }
+  }
+}
  
 //program
 
@@ -325,4 +332,28 @@ void change_status () {
       }
     }
   }
+}
+
+void print_alphabetically() {
+  int book_counter = 0;
+  list_of_books* book = head;
+  std::cout << "# Wyswietlanie alfabetycznie #" << std::endl;
+  while (book != NULL) {
+    book_counter++;
+    book = book->next;
+  }
+  book = head;
+  struct Book to_sort[book_counter];
+  for (auto &element : to_sort ) {
+    element = book->book;
+    book = book->next; 
+  }
+  bubble_sort(to_sort, book_counter);
+  for (auto const &element : to_sort) {
+    print_book(element);
+  }
+}
+
+void print_rented () {
+  std::cout << "# Wyswietlanie ksiazek wypozyczonych #" << std::endl;
 }
