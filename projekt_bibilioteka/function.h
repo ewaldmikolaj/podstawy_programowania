@@ -132,6 +132,13 @@ void print_used_books () {
 }
 
 void read_from_file () {
+  // list_of_books* element = head->next;
+  // while(element != NULL) {
+  //   list_of_books* temp = element->next;
+  //   delete[] element;
+  //   element = temp;
+  // }
+  // head = NULL;
   std::ifstream database("database.txt");
   if (database.good()) {
     std::string tab[12];
@@ -225,8 +232,8 @@ void modify_book_status () {
     time_t t = time(0); 
     struct tm* timeStruct = localtime(&t);
     modified->book.hire_date.year = (timeStruct->tm_year) + 1900;
-    modified->book.hire_date.month = (timeStruct->tm_mon);
-    modified->book.hire_date.day = (timeStruct->tm_mday) + 1;
+    modified->book.hire_date.month = (timeStruct->tm_mon) + 1;
+    modified->book.hire_date.day = (timeStruct->tm_mday);
     std::cout << "Wypozyczenie zakonczone" << std::endl;
   }
 }
@@ -362,4 +369,12 @@ void print_alphabetically() {
 
 void print_rented () {
   std::cout << "# Wyswietlanie ksiazek wypozyczonych #" << std::endl;
+  list_of_books* element = head;
+  std::cout << std::left << std::setw(25) << "tytul" << std::setw(20) << "imie wlasciciela" << std::setw(20) << "nazwisko wlascicela" << std::setw(20) << "data wypozyczenia" << std::endl;
+  while (element != NULL) {
+    if (element->book.status) {
+      std::cout << std::left << std::setw(25) << element->book.title << std::setw(20) << (element->book.status ? element->book.reader.name : "brak") << std::setw(20) << (element->book.status ? element->book.reader.surname : "brak") << std::setw(20) << (element->book.status ? std::to_string(element->book.hire_date.day) + '-' + std::to_string(element->book.hire_date.month) + '-' + std::to_string(element->book.hire_date.year) : "brak") << std::endl;
+    }
+    element = element -> next;
+  }
 }

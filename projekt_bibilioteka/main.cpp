@@ -29,8 +29,12 @@ void edit_option();
 void del_option();
 void change_status();
 void print_alphabetically();
+void print_rented();
 
 #include "function.h"
+
+//dodac by wczytywanie z pliku czyscilo program
+//dodac wyswietlanie wypozyczonych ksiazek
 
 
 int main() {
@@ -44,7 +48,7 @@ int main() {
       std::cout << "Co chcesz zrobic?\n1. Dodaj nowa ksiazke\n2. Wczytaj ksiazki\nX. Wyjdz" << std::endl;
     } else {
       main_switch_case = main_switch_case_big;
-      std::cout << "Co chcesz zrobic?\n1. Dodaj nowa ksiazke\n2. Usun ksiazke\n3. Edytuj dane ksiazki\n4. Zmien status ksiazki\n5. Wyszukaj ksiazke\n6. Wypisz wszystkie ksiazki\n7. Wypisz ksiazki alfabetycznie\n8. Wypisz ksiazki wypozyczone\nX. Wyjdz " << std::endl;
+      std::cout << "Co chcesz zrobic?\n1. Dodaj nowa ksiazke\n2. Usun ksiazke\n3. Edytuj dane ksiazki\n4. Zmien status ksiazki\n5. Wyszukaj ksiazke\n6. Wypisz wszystkie ksiazki\n7. Wypisz ksiazki alfabetycznie\n8. Wypisz ksiazki wypozyczone\n9. Wczytaj z pliku\n10. Zapisz do pliku\nX. Wyjdz " << std::endl;
     }
     input = string_input("wartosc");
     switch (main_switch_case.count(input) ? main_switch_case.at(input) : 0)
@@ -74,13 +78,16 @@ int main() {
       break;
 
     case 8:
+      print_rented();
       break;
     
     case 9:
+      std::cout << "Wczytanie danych z pliku..." << std::endl;
       read_from_file();
       break;
     
     case 10:
+      std::cout << "Zapisywanie danych do pliku..." << std::endl;
       save_to_file();
       break;
 

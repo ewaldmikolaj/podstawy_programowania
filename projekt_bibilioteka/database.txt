@@ -1,60 +1,24 @@
 1
-21 lekcji na XXI wiek
-Yuval Noah
-Harrari
-popularnonaukowa
-0
-0
-0
-0
-
-
-bardzo fajna
-3
-Forrest Gump
-Winston
-Groom
-opowiesc
-0
-0
-0
-0
-mikolaj
-ewald
-bardzo fajna
-4
-Wybor
-Edit Eva
-Echer
-historia
-0
-0
-0
-0
-mikolaj
-ewald
-nie przeczytalem
-5
-Trolle Putina
-Jessika
-Aro
-Dokumentalna
+Wiktor
+Szymanski
+Simp
+Simpowanie
 1
-14
+15
 0
 2021
-Mikolaj
-Ewald
-nie czytalem
-6
-Gambit krolowej
-Tevis
-Walter
-opowiesc
+Weronika
+Weronika
+kategoria
+2
+Jakub
+Luczak
+Simp
+Simpowanie
+1
+15
 0
-0
-0
-0
-
-
+2021
+Jagoda
+Jagoda
 kategoria
