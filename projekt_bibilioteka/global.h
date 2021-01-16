@@ -7,6 +7,7 @@
 #include <utility>
 
 list_of_books* head = NULL;
+list_of_books* tail = NULL;
 list_of_books* modified = NULL;
 std::string last_id = "0"; 
 

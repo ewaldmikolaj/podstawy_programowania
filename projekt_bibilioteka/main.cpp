@@ -35,6 +35,8 @@ void print_selected();
 
 #include "function.h"
 
+//dodac ogon
+
 int main() {
   std::string input;
   std::unordered_map<std::string, int> main_switch_case;
@@ -94,7 +96,6 @@ int main() {
 
     case 11:
       std::cout << "Wylaczanie programu..." << std::endl;
-      save_to_file();
       clean_list();
       std::exit(0);
       break;

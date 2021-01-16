@@ -8,10 +8,6 @@
 #include <array>
 #include <ctime>
 
-//all functions 
-
-
-
 //list functions
 
 void push (Book data) { 
@@ -21,6 +17,7 @@ void push (Book data) {
     element->prev = NULL;
     element->next = NULL;
     head = element;
+    tail = element;
   } else {
     list_of_books* curr = head;
 
@@ -33,6 +30,7 @@ void push (Book data) {
     element->prev = curr;
     element->next = NULL;
     curr->next = element;
+    tail = element;
   }
 }
 
@@ -43,11 +41,13 @@ void del_book () {
     head = modified->next;
   } else if (modified->next == NULL && modified->prev != NULL) {
     modified->prev->next = NULL;
+    tail = modified->prev;
   } else if (modified->next != NULL && modified->prev != NULL) {
     modified->prev->next = modified->next;
     modified->next->prev = modified->prev;
   } else if (modified->next == NULL && modified->prev == NULL) {
     head = NULL;
+    tail = NULL;
   }
   delete modified;
   modified = NULL;
@@ -85,6 +85,7 @@ void clean_list () {
     delete deleted;
   }
   head = NULL;
+  tail = NULL;
 }
 
 //simple functions

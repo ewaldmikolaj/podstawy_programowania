@@ -1,24 +1,24 @@
 1
-tytul
-imie
-nazwisko
-kategoria sprawdzam
-1
-16
-1
-2021
-mikolaj
-ewald
-inne bzdety
+Krzyzacy
+Henryk
+Sienkiewicz
+Powiesc
+0
+0
+0
+0
+
+
+Nudna
 2
-a
-b
-c
-s
-1
-16
-1
-2021
-mikolaj
-ewald
-a
+Wiktor
+Szymanski
+Blad lol
+Bruh
+0
+0
+0
+0
+
+
+PogChampik
