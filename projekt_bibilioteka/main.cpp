@@ -11,6 +11,7 @@
 void push(Book data); 
 void del_book(); 
 void print_all(); 
+void clean_list();
 
 void print_book(Book data);
 void print_used_books();
@@ -30,19 +31,15 @@ void del_option();
 void change_status();
 void print_alphabetically();
 void print_rented();
+void print_selected();
 
 #include "function.h"
-
-//dodac by wczytywanie z pliku czyscilo program
-//dodac wyswietlanie wypozyczonych ksiazek
-
 
 int main() {
   std::string input;
   std::unordered_map<std::string, int> main_switch_case;
   std::cout << "# Witamy w programie bibliotecznym #" << std::endl;
   while (true) {
-    //dodac menu zalezne od tego co mamy
     if (head == NULL) {
       main_switch_case = main_switch_case_small;
       std::cout << "Co chcesz zrobic?\n1. Dodaj nowa ksiazke\n2. Wczytaj ksiazki\nX. Wyjdz" << std::endl;
@@ -67,6 +64,10 @@ int main() {
 
     case 4:
       change_status();
+      break;
+
+    case 5:
+      print_selected();
       break;
       
     case 6:
@@ -94,6 +95,7 @@ int main() {
     case 11:
       std::cout << "Wylaczanie programu..." << std::endl;
       save_to_file();
+      clean_list();
       std::exit(0);
       break;
 

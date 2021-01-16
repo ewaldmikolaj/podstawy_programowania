@@ -76,6 +76,17 @@ void save_to_file () {
   database.close();
 }
 
+void clean_list () {
+  list_of_books* element = head;
+  list_of_books* deleted = element;
+  while (element != NULL) {
+    deleted = element;
+    element = element->next;
+    delete deleted;
+  }
+  head = NULL;
+}
+
 //simple functions
 
 std::string string_input (std::string what) {
@@ -132,15 +143,10 @@ void print_used_books () {
 }
 
 void read_from_file () {
-  // list_of_books* element = head->next;
-  // while(element != NULL) {
-  //   list_of_books* temp = element->next;
-  //   delete[] element;
-  //   element = temp;
-  // }
-  // head = NULL;
+  clean_list();
   std::ifstream database("database.txt");
-  if (database.good()) {
+  // https://stackoverflow.com/questions/26228424/how-to-detect-an-empty-file-in-c/26228684
+  if (database.good() && database.peek() != std::ifstream::traits_type::eof()) {
     std::string tab[12];
     int i = 0;
     while(!database.eof()) {
@@ -157,8 +163,8 @@ void read_from_file () {
 }
 
 void add_book () {
-  std::pair <std::string, std::string> holder_cp[11];
-  for (int i = 0; i < 11; i++) {
+  std::pair <std::string, std::string> holder_cp[12];
+  for (int i = 0; i < 12; i++) {
     holder_cp[i] = book_holder[i];
   }
   for (auto &member : holder_cp) {
@@ -376,5 +382,33 @@ void print_rented () {
       std::cout << std::left << std::setw(25) << element->book.title << std::setw(20) << (element->book.status ? element->book.reader.name : "brak") << std::setw(20) << (element->book.status ? element->book.reader.surname : "brak") << std::setw(20) << (element->book.status ? std::to_string(element->book.hire_date.day) + '-' + std::to_string(element->book.hire_date.month) + '-' + std::to_string(element->book.hire_date.year) : "brak") << std::endl;
     }
     element = element -> next;
+  }
+}
+
+void print_selected() {
+  std::cout << "# Wyszukiwanie ksiazki #" << std::endl;
+  std::string title_or_id_or_name = "";
+  title_or_id_or_name = string_input("id albo tytul albo nazwisko czytelnika");
+  if (find_in_list(title_or_id_or_name)) {
+    print_book(modified->book);
+    modified = NULL;
+  } else {
+    bool is_found = false;
+    bool header = false;
+    list_of_books* element = head;
+    while (element != NULL) {
+      if (element->book.reader.surname == title_or_id_or_name) {
+        if (!header) {
+          std::cout << "Ksiazki wypozyczone przez " << title_or_id_or_name << " to:" << std::endl;
+          header = true;
+        }
+        print_book(element->book);
+        is_found = true;
+      }
+      element = element->next;
+    }
+    if (!is_found) {
+      std::cout << "Ksiazka nie zostala odnaleziona" << std::endl;
+    }
   }
 }
