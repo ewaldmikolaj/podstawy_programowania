@@ -35,7 +35,7 @@ void print_selected();
 
 #include "function.h"
 
-//dodac ogon
+//program wyswietla rozne menu w zaleznosci od ilosci ksiazek, dlatego na poczatku będą tylko dwie opcje
 
 int main() {
   std::string input;
