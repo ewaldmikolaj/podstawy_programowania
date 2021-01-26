@@ -36,21 +36,26 @@ void push (Book data) {
 
 void del_book () {
   //jakby cos nie dzialalo to commit z dnia 29.12.2020
-  if (modified->next !=NULL && modified->prev == NULL) {
-    modified->next->prev = NULL;
-    head = modified->next;
-  } else if (modified->next == NULL && modified->prev != NULL) {
-    modified->prev->next = NULL;
-    tail = modified->prev;
-  } else if (modified->next != NULL && modified->prev != NULL) {
-    modified->prev->next = modified->next;
-    modified->next->prev = modified->prev;
-  } else if (modified->next == NULL && modified->prev == NULL) {
-    head = NULL;
-    tail = NULL;
+  if (modified->book.status) {
+    std::cout << "ksiazka jest wypozyczona, nie mozna usunac" << std::endl;
+    modified = NULL;
+  } else {
+    if (modified->next !=NULL && modified->prev == NULL) {
+      modified->next->prev = NULL;
+      head = modified->next;
+    } else if (modified->next == NULL && modified->prev != NULL) {
+      modified->prev->next = NULL;
+      tail = modified->prev;
+    } else if (modified->next != NULL && modified->prev != NULL) {
+      modified->prev->next = modified->next;
+      modified->next->prev = modified->prev;
+    } else if (modified->next == NULL && modified->prev == NULL) {
+      head = NULL;
+      tail = NULL;
+    }
+    delete modified;
+    modified = NULL;
   }
-  delete modified;
-  modified = NULL;
 }
 
 void print_all () {
@@ -109,6 +114,7 @@ int int_input (std::string what, int from, int to) {
       std::cout << "Podaj " << what << ": ";
     }
   } while (output < from || output > to);
+  std::cin.ignore();
   return output;
 }
 
@@ -221,6 +227,18 @@ void edit_book_switch() {
   }
 }
 
+int how_many_loans (std::string name, std::string surname) {
+  list_of_books* element = head;
+  int counter = 0;
+  while (element != NULL) {
+    if (element->book.reader.name == name && element->book.reader.surname == surname) {
+      counter++;
+    }
+    element = element->next;
+  }
+  return counter;
+}
+ 
 void modify_book_status () {
   if (modified->book.status) {
     std::cout << "Ksiazka byla wypozyczona przez " << modified->book.reader.name << " " << modified->book.reader.surname << ", zmieniam status na oddana" << std::endl;
@@ -233,8 +251,15 @@ void modify_book_status () {
   } else {
     std::cout << "Wypozycznie ksiazki: " << std::endl;
     modified->book.status = 1;
-    modified->book.reader.name = string_input("imie czytelnika");
-    modified->book.reader.surname = string_input("nazwisko czytelnika");
+    std::string name = string_input("imie czytelnika");
+    std::string surname = string_input("nazwisko czytelnika");
+    if (how_many_loans(name, surname) >= 3) {
+      std::cout << "Ten uzytkownik wypozyczyl za duzo ksiazek! Przerywanie..." << std::endl;
+      modified->book.status = 0;
+      return;
+    }
+    modified->book.reader.name = name;
+    modified->book.reader.surname = surname;
     std::cout << "dodaje date wypozyczenia..." << std::endl;
     time_t t = time(0); 
     struct tm* timeStruct = localtime(&t);

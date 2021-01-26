@@ -24,6 +24,7 @@ bool find_in_list(std::string value);
 void edit_book_switch();
 void modify_book_status();
 
+int how_many_loans(std::string name, std::string surname);
 void add_option();
 void add_book();
 void edit_option();
@@ -36,6 +37,9 @@ void print_selected();
 #include "function.h"
 
 //program wyswietla rozne menu w zaleznosci od ilosci ksiazek, dlatego na poczatku będą tylko dwie opcje
+//modyfikacje:
+//1. Dodaj zabezpieczenie aby nie można było usunac ksiazki ktora jest wypozyczona
+//2. Dodaj opcje ktora sprawdz ile ksiazek ma wypozyczona dana osoba i jesli > 3 to zablokuj mozliwosc wypozyczania
 
 int main() {
   std::string input;
@@ -101,7 +105,7 @@ int main() {
       break;
 
     case 0:
-      std::cout << "Wprowadz poprawna wartosc" << std::endl;
+      std::cout << "Wprowadz niepoprawna wartosc" << std::endl;
       break;
     }
   }
